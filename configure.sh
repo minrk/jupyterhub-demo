@@ -3,6 +3,6 @@
 
 # stage supervisord config file and reload
 source ./env
-./render jupyterhub.conf.tpl /etc/supervisor/conf.d/jupyterhub.conf
-supervisord reread
-supervisord update
+./render jupyterhub.conf.tpl > /etc/supervisor/conf.d/jupyterhub.conf
+supervisorctl reread
+supervisorctl update

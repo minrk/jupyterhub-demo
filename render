@@ -15,7 +15,7 @@ import binascii
 def random_hex(nb):
     return binascii.hexlify(os.urandom(nb)).decode('ascii')
 
-def render_template(tpl_f, dest):
+def render_template(tpl_f):
     with open(tpl_f) as f:
         tpl = f.read()
     
@@ -25,4 +25,4 @@ def render_template(tpl_f, dest):
     print(content)
 
 if __name__ == '__main__':
-    render_template(sys.argv[1],sys.argv[2])
+    render_template(sys.argv[1])
