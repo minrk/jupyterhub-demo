@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+"""
+super dumb template rendering
+
+renders Python string template with env variables as template namespace
+
+Usage:
+
+    render config_file_template 
+"""
+import os
+import sys
+import binascii
+
+def random_hex(nb):
+    return binascii.hexlify(os.urandom(nb)).decode('ascii')
+
+def render_template(tpl_f, dest):
+    with open(tpl_f) as f:
+        tpl = f.read()
+    
+    env = dict(os.environ)
+    env.setdefault('CONFIGPROXY_AUTH_TOKEN', random_hex(64))
+    content = tpl.format(**env)
+    print(content)
+
+if __name__ == '__main__':
+    render_template(sys.argv[1],sys.argv[2])
