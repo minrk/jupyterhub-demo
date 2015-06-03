@@ -4,7 +4,7 @@ c = get_config()
 
 # spawn with Docker
 c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
-c.DockerSpawner.image_name = 'jupyter/singleuser'
+c.DockerSpawner.container_image = 'singleuser'
 
 # The docker instances need access to the Hub, so the default loopback port doesn't work:
 from IPython.utils.localinterfaces import public_ips
