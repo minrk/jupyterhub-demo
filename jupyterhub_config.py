@@ -9,6 +9,7 @@ c.DockerSpawner.container_image = 'singleuser'
 # The docker instances need access to the Hub, so the default loopback port doesn't work:
 from IPython.utils.localinterfaces import public_ips
 c.JupyterHub.hub_ip = public_ips()[0]
+c.JupyterHub.proxy_cmd = ['configurable-http-proxy', '--redirect-port', '80']
 
 
 # OAuth with GitHub
