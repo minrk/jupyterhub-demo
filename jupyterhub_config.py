@@ -12,8 +12,8 @@ c.JupyterHub.hub_ip = public_ips()[0]
 c.JupyterHub.proxy_cmd = ['configurable-http-proxy', '--redirect-port', '80']
 
 
-# OAuth with GitHub
-c.JupyterHub.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
+# OAuth with CILogon
+c.JupyterHub.authenticator_class = 'oauthenticator.cilogon.CILogonOAuthenticator'
 
 c.Authenticator.whitelist = whitelist = set()
 c.Authenticator.admin_users = admin = set()
@@ -24,6 +24,7 @@ import os
 
 join = os.path.join
 here = os.path.dirname(__file__)
+
 with open(join(here, 'userlist')) as f:
     for line in f:
         if not line:
@@ -33,8 +34,6 @@ with open(join(here, 'userlist')) as f:
         whitelist.add(name)
         if len(parts) > 1 and parts[1] == 'admin':
             admin.add(name)
-
-c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
 
 # ssl config
 ssl = join(here, 'ssl')
