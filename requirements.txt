@@ -3,4 +3,4 @@
 -e git+https://github.com/jupyter/dockerspawner#egg=dockerspawner
 PyOpenSSL
 oauthlib
-
+cryptography
