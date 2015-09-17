@@ -1,12 +1,11 @@
 # JupyterHub demo
 
 These are the setup scripts for a demo deployment of JupyterHub,
-using GitHub OAuth and Docker spawning.
-It is currently running at https://demohub.jupyter.org
+using GitHub OAuth and local system users.
 
 ## Clone and install JupyterHub and dependencies
 
-    git clone https://github.com/jupyter/jupyterhub-demo /srv/jupyterhub
+    git clone https://github.com/minrk/jupyterhub-demo -b github-local /srv/jupyterhub
     cd /srv/jupyterhub
     sh install.sh
 

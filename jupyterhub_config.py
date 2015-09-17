@@ -1,19 +1,8 @@
-# Configuration file for Jupyter Hub
+# Configuration file for JupyterHub
 
-c = get_config()
-
-# spawn with Docker
-c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
-c.DockerSpawner.container_image = 'singleuser'
-
-# The docker instances need access to the Hub, so the default loopback port doesn't work:
-from IPython.utils.localinterfaces import public_ips
-c.JupyterHub.hub_ip = public_ips()[0]
-c.JupyterHub.proxy_cmd = ['configurable-http-proxy', '--redirect-port', '80']
-
-
-# OAuth with GitHub
-c.JupyterHub.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
+# OAuth with GitHub, creating local users if they don't exist
+c.JupyterHub.authenticator_class = 'oauthenticator.github.LocalGitHubOAuthenticator'
+c.LocalGitHubOAuthenticator.create_system_users = True
 
 c.Authenticator.whitelist = whitelist = set()
 c.Authenticator.admin_users = admin = set()
@@ -34,8 +23,6 @@ with open(join(here, 'userlist')) as f:
         if len(parts) > 1 and parts[1] == 'admin':
             admin.add(name)
 
-c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
-
 # ssl config
 ssl = join(here, 'ssl')
 keyfile = join(ssl, 'ssl.key')
@@ -43,5 +30,7 @@ certfile = join(ssl, 'ssl.crt')
 if os.path.exists(keyfile):
     c.JupyterHub.ssl_key = keyfile
 if os.path.exists(certfile):
+    # redirect http to https
+    c.JupyterHub.proxy_cmd = ['configurable-http-proxy', '--redirect-port', '80']
     c.JupyterHub.ssl_cert = certfile
     c.JupyterHub.port = 443
