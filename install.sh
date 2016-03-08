@@ -1,6 +1,7 @@
 #!/bin/bash
 # install jupyterhub, dependencies
 # run me with sudo
+set -e
 
 apt-get update
 apt-get install \
@@ -9,7 +10,7 @@ apt-get install \
   npm nodejs-legacy \
   python3-dev python3-pip
 
-which -s docker || curl -sSL https://get.docker.com/ubuntu/ | sh
+which -s docker || curl -SL https://get.docker.com/ubuntu/ | sh
 
 pip3 install -r requirements.txt
 
