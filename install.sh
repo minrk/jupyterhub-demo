@@ -18,3 +18,6 @@ npm install -g configurable-http-proxy
 
 docker pull jupyter/singleuser
 
+cp jupyterhub.conf /etc/supervisor/conf.d/jupyterhub.conf
+supervisorctl reread
+supervisorctl update

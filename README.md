@@ -8,7 +8,7 @@ It is currently running at https://demohub.jupyter.org
 
     git clone https://github.com/jupyter/jupyterhub-demo /srv/jupyterhub
     cd /srv/jupyterhub
-    sh install.sh
+    ./install.sh
 
 ## Configure your deployment
 
@@ -30,11 +30,8 @@ It is currently running at https://demohub.jupyter.org
 
 3. add your ssl cert and key in `ssl/ssl.crt` and `ssl/ssl.key`, respectively.
 
-4. apply your configuration:
 
-        ./configure.sh
-
-5. edit `jupyterhub_config.py` as appropriate
+4. edit `jupyterhub_config.py` as appropriate
 
 
 ## Start and stop JupyterHub
