@@ -3,8 +3,29 @@
 c = get_config()
 
 # spawn with Docker
-c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
+from dockerspawner import DockerSpawner
+
+import os
+
+root_dir = os.path.dirname(__file__)
+skeleton_home_dir = os.path.join(root_dir, 'skel')
+# uid, gid of docker user
+uid = 1000
+gid = 1000
+
+class LocalDockerSpawner(DockerSpawner):
+    def start(self):
+        work_dir = os.path.join(root_dir, 'work', self.user.name)
+        if not os.path.exists(work_dir):
+            shutil.copytree(skeleton_dir, work_dir)
+            os.chown(work_dir, uid, gid)
+        return super().start()
+
+c.JupyterHub.spawner_class = LocalDockerSpawner
 c.DockerSpawner.container_image = 'singleuser'
+c.DockerSpawner.volumes = {
+    os.path.join(root_dir, 'work/{username}'): '/home/jovyan/work',
+}
 
 # The docker instances need access to the Hub, so the default loopback port doesn't work:
 import netifaces
