@@ -9,6 +9,8 @@ import os
 
 root_dir = os.path.dirname(__file__)
 skeleton_home_dir = os.path.join(root_dir, 'skel')
+import shutil
+
 # uid, gid of docker user
 uid = 1000
 gid = 1000
@@ -17,7 +19,7 @@ class LocalDockerSpawner(DockerSpawner):
     def start(self):
         work_dir = os.path.join(root_dir, 'work', self.user.name)
         if not os.path.exists(work_dir):
-            shutil.copytree(skeleton_dir, work_dir)
+            shutil.copytree(skeleton_home_dir, work_dir)
             os.chown(work_dir, uid, gid)
         return super().start()
 
