@@ -20,6 +20,7 @@ It is currently running at https://demohub.jupyter.org
         wash
         kaylee
         jayne
+        book
         simon
         river
    Admin users will have admin access to the JupyterHub instance. 
