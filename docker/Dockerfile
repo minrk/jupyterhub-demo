@@ -1,4 +1,4 @@
-FROM jupyter/singleuser
+FROM jupyterhub/singleuser
 USER root
 RUN apt-get -y update && apt-get -y install npm nodejs-legacy
 USER jovyan
