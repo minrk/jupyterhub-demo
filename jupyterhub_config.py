@@ -15,6 +15,7 @@ import shutil
 uid = 1000
 gid = 1000
 
+c.DockerSpawner.remove_containers = True
 class LocalDockerSpawner(DockerSpawner):
     def start(self):
         work_dir = os.path.join(root_dir, 'work', self.user.name)
@@ -29,12 +30,17 @@ c.DockerSpawner.volumes = {
     os.path.join(root_dir, 'work/{username}'): '/home/jovyan/work',
 }
 
+c.Spawner.default_url = '/lab'
+
 # The docker instances need access to the Hub, so the default loopback port doesn't work:
 import netifaces
 docker_ip = netifaces.ifaddresses('docker0')[netifaces.AF_INET][0]['addr']
 c.JupyterHub.hub_ip = docker_ip
 
-c.JupyterHub.proxy_cmd = ['configurable-http-proxy', '--redirect-port', '80']
+c.ConfigurableHTTPProxy.command = ['configurable-http-proxy', '--redirect-port', '80']
+import binascii
+c.ConfigurableHTTPProxy.api_url = 'http://127.0.0.1:50505'
+c.ConfigurableHTTPProxy.auth_token = binascii.b2a_hex(os.urandom(16))
 
 
 # OAuth with GitHub
