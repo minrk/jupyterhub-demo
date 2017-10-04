@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
-export PATH=/opt/conda/bin:$PATH
+export PATH=/opt/nvm/bin:$PATH
+nvm use 6
 source ./env
 exec jupyterhub $@
